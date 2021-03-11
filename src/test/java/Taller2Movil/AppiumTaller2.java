@@ -6,14 +6,14 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Order;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.concurrent.TimeUnit;
 
 
@@ -54,23 +54,34 @@ public class AppiumTaller2 {
         driver.findElement(By.xpath("//android.widget.TextView[@content-desc='Guardar']")).click();
     }
 
+    public void Eliminar_Nota(){
+        Editar_Nota();
+        driver.findElement(By.xpath("//android.widget.TextView[@text='"+Titulo2+"']")).click();
+        driver.findElement(By.xpath("//android.widget.TextView[@content-desc='Eliminar']")).click();
+        driver.findElement(By.xpath("//android.widget.Button[@text='ELIMINAR']")).click();
+    }
+
 
     @Test
-    public void Validar_Existencia_Nota1(){
+    public void A(){
             Crear_Nota();
         int Notas=driver.findElements(By.xpath("//android.widget.TextView[@text='"+Titulo+"']")).size();
         Assert.assertEquals("ERROR en contacto",1,Notas);
     }
     @Test
-    public void Validar_Edicion_Nota2() {
+    public void B() {
         Editar_Nota();
         String expectedResult="Prueba2";
         String ResultadoReal=driver.findElement(By.xpath("//android.widget.TextView[@text='"+Titulo2+"']")).getText();
         Assert.assertEquals("Error el resulta es incorrecto",expectedResult,ResultadoReal);
     }
 
-
-
+    @Test
+    public void C() {
+        Eliminar_Nota();
+        int Notas=driver.findElements(By.xpath("//android.widget.TextView[@text='"+Titulo2+"']")).size();
+        Assert.assertEquals("ERROR en contacto",0,Notas);
+        }
 
 
         @After
